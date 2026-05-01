@@ -140,6 +140,15 @@ macro(COLMAP_ADD_EXECUTABLE TARGET_NAME)
     target_link_libraries(${TARGET_NAME} colmap)
     if(VCPKG_BUILD)
         install(TARGETS ${TARGET_NAME} DESTINATION tools/)
+    elseif(WIN32 AND CMAKE_VERSION VERSION_GREATER_EQUAL "3.21")
+        install(TARGETS ${TARGET_NAME}
+                RUNTIME DESTINATION bin/)
+        install(DIRECTORY "$<TARGET_FILE_DIR:${TARGET_NAME}>/"
+                DESTINATION bin/
+                PATTERN "*.pdb" EXCLUDE
+                PATTERN "*.ilk" EXCLUDE
+                PATTERN "*.exp" EXCLUDE
+                PATTERN "*.lib" EXCLUDE)
     else()
         install(TARGETS ${TARGET_NAME} DESTINATION bin/)
     endif()
