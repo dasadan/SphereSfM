@@ -94,10 +94,10 @@ find_package(Boost REQUIRED COMPONENTS
              program_options
              filesystem
              graph
-             system
-             unit_test_framework)
+             system)
+            #  unit_test_framework)
 
-find_package(Eigen3 REQUIRED)
+# find_package(Eigen3 REQUIRED)
 
 find_package(FreeImage REQUIRED)
 
@@ -125,7 +125,7 @@ endif()
 set(CUDA_MIN_VERSION "7.0")
 if(CUDA_ENABLED)
     if(CMAKE_VERSION VERSION_LESS 3.17)
-        find_package(CUDA QUIET)
+        find_package(CUDA REQUIRED)
         if(CUDA_FOUND)
             message(STATUS "Found CUDA version ${CUDA_VERSION} installed in "
                     "${CUDA_TOOLKIT_ROOT_DIR} via legacy CMake (<3.17) module. "
@@ -149,7 +149,7 @@ if(CUDA_ENABLED)
             set(CUDAToolkit_BIN_DIR "${CUDA_TOOLKIT_ROOT_DIR}/bin")
         endif()
     else()
-        find_package(CUDAToolkit QUIET)
+        find_package(CUDAToolkit REQUIRED)
         if(CUDAToolkit_FOUND)
             set(CUDA_FOUND ON)
             enable_language(CUDA)
